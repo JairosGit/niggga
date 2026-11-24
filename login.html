@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Warehouse Management — Login</title>
+  <!-- Bootstrap 5.3 CSS via jsDelivr CDN (Zero JavaScript) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <!-- Google Fonts: Poppins & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --card-bg: #ffffff;
+      --blob-periwinkle: #e8ecf7;
+      --teal-dark: #1b9aaa;
+      --cyan-bright: #20bcc4;
+      --logo-teal: #1ab3bc;
+      --nav-slate: #5578a5;
+      --nav-slate-hover: #2d4c75;
+      --amber-cta: #f7ab2f;
+      --amber-cta-hover: #e5981c;
+      --text-muted-slate: #8a94a6;
+      --input-border: #dce3f0;
+      --input-bg: #f8faff;
+    }
+
+    /* Full-bleed white viewport background */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--card-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Full-screen container with zero outer frame or border-radius */
+    .wm-card {
+      width: 100%;
+      min-height: 100vh;
+      background-color: var(--card-bg);
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Organic periwinkle-blue corner blobs layer */
+    .wm-blobs-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+    }
+
+    .wm-blobs-layer svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Foreground interactive wrapper */
+    .wm-content-layer {
+      position: relative;
+      z-index: 2;
+      max-width: 1260px;
+      min-height: 100vh;
+      margin: 0 auto;
+    }
+
+    /* Hero / Login Typography matching reference */
+    .wm-title-top {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 2.7vw, 2.45rem);
+      line-height: 1.12;
+      letter-spacing: 0.02em;
+      color: var(--teal-dark);
+    }
+
+    .wm-title-bottom {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.9rem, 2.7vw, 2.45rem);
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+      color: var(--cyan-bright);
+    }
+
+    .wm-subtitle {
+      font-size: 0.88rem;
+      color: var(--text-muted-slate);
+      line-height: 1.55;
+    }
+
+    /* Login Form Styling */
+    .wm-form-box {
+      max-width: 370px;
+      width: 100%;
+    }
+
+    .wm-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--nav-slate);
+      margin-bottom: 0.35rem;
+    }
+
+    .wm-input.form-control {
+      background-color: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 8px;
+      height: 45px;
+      padding: 0.55rem 0.9rem;
+      font-size: 0.86rem;
+      color: #2b3548;
+      box-shadow: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+    }
+
+    .wm-input.form-control::placeholder {
+      color: #a3adc2;
+    }
+
+    .wm-input.form-control:focus {
+      background-color: #ffffff;
+      border-color: var(--cyan-bright);
+      box-shadow: 0 0 0 4px rgba(32, 188, 196, 0.14);
+    }
+
+    /* Custom Checkbox */
+    .wm-check.form-check-input {
+      width: 16px;
+      height: 16px;
+      border-radius: 4px;
+      border: 1.5px solid #c3cde0;
+      background-color: var(--input-bg);
+      box-shadow: none;
+      cursor: pointer;
+      transition: background-color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .wm-check.form-check-input:checked {
+      background-color: var(--logo-teal);
+      border-color: var(--logo-teal);
+    }
+
+    .wm-check.form-check-input:focus {
+      box-shadow: 0 0 0 3px rgba(26, 179, 188, 0.18);
+      border-color: var(--logo-teal);
+    }
+
+    .wm-check-label {
+      font-size: 0.8rem;
+      color: var(--text-muted-slate);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .wm-forgot-link {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--nav-slate);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    .wm-forgot-link:hover {
+      color: var(--logo-teal);
+      text-decoration: underline;
+    }
+
+    /* Warm Amber-Orange CTA Button matching "GET STARTED" */
+    .btn-wm-signin.btn {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--amber-cta);
+      border: none;
+      border-radius: 6px;
+      height: 46px;
+      color: #ffffff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 10px 22px -6px rgba(247, 171, 47, 0.55);
+      transition: background-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+    }
+
+    .btn-wm-signin.btn:hover,
+    .btn-wm-signin.btn:focus-visible {
+      background-color: var(--amber-cta-hover);
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 26px -6px rgba(229, 152, 28, 0.65);
+    }
+
+    .btn-wm-signin.btn:active {
+      transform: translateY(0px);
+    }
+
+    /* Seamless blend for the warehouse illustration image */
+    .wm-illustration-img {
+      max-width: 630px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+  </style>
+</head>
+<body class="m-0 p-0">
+
+  <!-- Full-Viewport Main Container -->
+  <main class="wm-card d-flex align-items-center">
+
+    <!-- Background Soft Periwinkle-Blue Organic Corner Blobs (#e8ecf7) -->
+    <div class="wm-blobs-layer" aria-hidden="true">
+      <svg viewBox="0 0 1180 670" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Top-left organic corner wave -->
+        <path d="M0,0 L275,0 C268,58 228,108 168,125 C106,143 52,162 0,210 Z" fill="#e8ecf7" />
+        <!-- Bottom-left organic corner wave -->
+        <path d="M0,515 C52,482 115,478 168,516 C222,555 246,612 262,670 L0,670 Z" fill="#e8ecf7" />
+        <!-- Large right organic sweeping wave behind illustration -->
+        <path d="M935,0 L1180,0 L1180,670 L535,670 C505,595 524,515 588,465 C654,414 686,348 708,268 C730,188 796,154 855,108 C902,71 924,36 935,0 Z" fill="#e8ecf7" />
+      </svg>
+    </div>
+
+    <!-- Foreground Content Wrapper -->
+    <div class="wm-content-layer w-100 d-flex align-items-center px-4 px-sm-5 py-5">
+
+      <!-- SPLIT MAIN CONTENT (Left: Login Form | Right: Flat Vector Illustration) -->
+      <div class="row align-items-center w-100 g-4 g-lg-3 my-auto mx-0">
+
+        <!-- LEFT COLUMN: Warehouse Management Login Form -->
+        <div class="col-12 col-lg-5 ps-lg-4">
+          <div class="wm-form-box mx-auto mx-lg-0">
+            <!-- Two-line Bold Teal/Cyan Title -->
+            <div class="mb-3">
+              <h1 class="mb-2">
+                <span class="d-block wm-title-top">WAREHOUSE</span>
+                <span class="d-block wm-title-bottom">MANAGEMENT</span>
+              </h1>
+              <p class="wm-subtitle mb-0">
+                Sign in to your account to track inventory, dispatch shipments, and manage operations.
+              </p>
+            </div>
+
+            <!-- Pure HTML/CSS Bootstrap 5 Login Form (Zero JavaScript) -->
+            <form action="#dashboard" method="get" class="mt-3 pt-1">
+              <!-- Email / Username Input -->
+              <div class="mb-3">
+                <label for="wmEmail" class="form-label wm-label">Email or Username</label>
+                <input
+                  type="text"
+                  class="form-control wm-input"
+                  id="wmEmail"
+                  name="username"
+                  value="admin"
+                  placeholder="manager@warehouse.io"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+
+              <!-- Password Input -->
+              <div class="mb-3">
+                <label for="wmPassword" class="form-label wm-label">Password</label>
+                <input
+                  type="password"
+                  class="form-control wm-input"
+                  id="wmPassword"
+                  name="password"
+                  value="•••"
+                  placeholder="••••••••••••"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+
+              <!-- Remember Me + Forgot Password Row -->
+              <div class="d-flex align-items-center justify-content-between mb-4">
+                <div class="form-check d-flex align-items-center gap-2 m-0">
+                  <input
+                    class="form-check-input wm-check m-0"
+                    type="checkbox"
+                    id="wmRemember"
+                    name="remember"
+                    checked
+                  />
+                  <label class="form-check-label wm-check-label" for="wmRemember">
+                    Remember me
+                  </label>
+                </div>
+                <a href="#forgot-password" class="wm-forgot-link">Forgot password?</a>
+              </div>
+
+              <!-- Warm Amber-Orange Primary CTA Button ("SIGN IN") -->
+              <button type="submit" class="btn btn-wm-signin w-100">
+                SIGN IN
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Warehouse Management Illustration Image -->
+        <div class="col-12 col-lg-7 d-flex align-items-center justify-content-center">
+          <img
+            src="images/WHMS.png"
+            onerror="this.onerror=null; this.src='https://placehold.co/630x470/e8ecf7/1b9aaa?text=warehouse-illustration.png';"
+            alt="Warehouse management illustration with forklift, cargo monitor dashboard, verified check badge, and warehouse worker"
+            class="img-fluid wm-illustration-img"
+          />
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>
